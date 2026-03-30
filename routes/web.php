@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ConferenceController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\HomeController;
@@ -19,6 +20,12 @@ Route::prefix('employee')->name('employee.')->group(function () {
     Route::get('/conferences/{id}', [EmployeeController::class, 'show'])->name('conferences.show');
 });
 
-Route::get('/admin', function () {
-    return view('placeholder', ['pageTitle' => __('messages.admin_subsystem')]);
-})->name('admin.dashboard');
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', function () {
+        return view('admin.dashboard');
+    })->name('dashboard');
+    Route::get('/users', function () {
+        return view('admin.users_placeholder');
+    })->name('users.index');
+    Route::resource('conferences', ConferenceController::class)->parameters(['conferences' => 'id']);
+});

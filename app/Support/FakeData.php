@@ -2,49 +2,55 @@
 
 namespace App\Support;
 
+use Illuminate\Support\Carbon;
+
 class FakeData
 {
-    public static function conferences(): array
+    private static function startData(): array
     {
         return [
-            [
-                'id' => 1,
-                'title' => 'Konferencijos pavadinimas 1',
-                'description' => 'Trumpas aprašymas apie konferenciją nr. 1.',
-                'lecturers' => 'Vardenis Pavardenis',
-                'date' => '2026-06-10',
-                'time' => '10:00',
-                'address' => 'Adresas 12, Vilnius',
-                'is_past' => false,
-            ],
-            [
-                'id' => 2,
-                'title' => 'Konferencijos pavadinimas 2',
-                'description' => 'Trumpas aprašymas apie konferenciją nr. 2.',
-                'lecturers' => 'Antras Vardenis',
-                'date' => '2025-03-01',
-                'time' => '14:00',
-                'address' => 'Gatvė 5, Kaunas',
-                'is_past' => true,
-            ],
-            [
-                'id' => 3,
-                'title' => 'Konferencijos pavadinimas 3',
-                'description' => 'Trumpas aprašymas apie konferenciją nr. 3.',
-                'lecturers' => 'Trečias Pavardenis',
-                'date' => '2026-09-20',
-                'time' => '09:30',
-                'address' => 'Adresas 8, korpusas B',
-                'is_past' => false,
-            ],
+            ['id' => 1, 'title' => 'Konferencijos pavadinimas 1', 'description' => 'Trumpas aprašymas apie konferenciją nr. 1.', 'lecturers' => 'Vardenis Pavardenis', 'date' => '2026-06-10', 'time' => '10:00', 'address' => 'Adresas 12, Vilnius'],
+            ['id' => 2, 'title' => 'Konferencijos pavadinimas 2', 'description' => 'Trumpas aprašymas apie konferenciją nr. 2.', 'lecturers' => 'Antras Vardenis', 'date' => '2025-03-01', 'time' => '14:00', 'address' => 'Gatvė 5, Kaunas'],
+            ['id' => 3, 'title' => 'Konferencijos pavadinimas 3', 'description' => 'Trumpas aprašymas apie konferenciją nr. 3.', 'lecturers' => 'Trečias Pavardenis', 'date' => '2026-09-20', 'time' => '09:30', 'address' => 'Adresas 8, korpusas B'],
         ];
+    }
+
+    public static function raw(): array
+    {
+        if (! session()->has('sd1_conferences')) {
+            session(['sd1_conferences' => self::startData()]);
+        }
+
+        return session('sd1_conferences');
+    }
+
+    public static function saveRaw(array $list): void
+    {
+        session(['sd1_conferences' => $list]);
+    }
+
+    private static function addPast(array $c): array
+    {
+        $c['is_past'] = Carbon::parse($c['date'])->startOfDay()->lt(now()->startOfDay());
+
+        return $c;
+    }
+
+    public static function conferences(): array
+    {
+        $x = [];
+        foreach (self::raw() as $c) {
+            $x[] = self::addPast($c);
+        }
+
+        return $x;
     }
 
     public static function conferenceById($id): ?array
     {
-        foreach (self::conferences() as $c) {
+        foreach (self::raw() as $c) {
             if ($c['id'] == $id) {
-                return $c;
+                return self::addPast($c);
             }
         }
 
@@ -53,14 +59,26 @@ class FakeData
 
     public static function conferencesPlannedOnly(): array
     {
-        $out = [];
+        $x = [];
         foreach (self::conferences() as $c) {
             if (! $c['is_past']) {
-                $out[] = $c;
+                $x[] = $c;
             }
         }
 
-        return $out;
+        return $x;
+    }
+
+    public static function nextId(): int
+    {
+        $m = 0;
+        foreach (self::raw() as $c) {
+            if ($c['id'] > $m) {
+                $m = $c['id'];
+            }
+        }
+
+        return $m + 1;
     }
 
     public static function registrationsForConference($conferenceId): array
@@ -92,11 +110,7 @@ class FakeData
         if (! is_array($extra)) {
             $extra = [];
         }
-        $extra[] = [
-            'conference_id' => $conferenceId,
-            'name' => $name,
-            'email' => $email,
-        ];
+        $extra[] = ['conference_id' => $conferenceId, 'name' => $name, 'email' => $email];
         session(['sd1_reg' => $extra]);
     }
 }
