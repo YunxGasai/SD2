@@ -13,12 +13,12 @@
         </tr>
         @foreach ($conferences as $c)
             <tr>
-                <td>{{ $c['title'] }}</td>
-                <td>{{ $c['date'] }}</td>
+                <td>{{ $c->title }}</td>
+                <td>{{ $c->date->format('Y-m-d') }}</td>
                 <td>
-                    <a href="{{ route('client.conferences.show', $c['id']) }}">{{ __('conference.view') }}</a>
+                    <a href="{{ route('client.conferences.show', $c->id) }}">{{ __('conference.view') }}</a>
                     |
-                    <a href="{{ route('client.conferences.register', $c['id']) }}">{{ __('conference.register_link') }}</a>
+                    <a href="{{ route('client.conferences.register', $c->id) }}">{{ __('conference.register_link') }}</a>
                 </td>
             </tr>
         @endforeach

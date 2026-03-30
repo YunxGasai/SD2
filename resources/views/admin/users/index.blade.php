@@ -20,10 +20,10 @@
         </tr>
         @foreach ($users as $u)
             <tr>
-                <td>{{ $u['first_name'] }}</td>
-                <td>{{ $u['last_name'] }}</td>
-                <td>{{ $u['email'] }}</td>
-                <td><a href="{{ route('admin.users.edit', $u['id']) }}">{{ __('admin.edit') }}</a></td>
+                <td>{{ $u->first_name }}</td>
+                <td>{{ $u->last_name }}</td>
+                <td>{{ $u->email }}</td>
+                <td><a href="{{ route('admin.users.edit', $u->id) }}">{{ __('admin.edit') }}</a></td>
             </tr>
         @endforeach
     </table>

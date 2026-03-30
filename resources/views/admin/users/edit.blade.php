@@ -13,22 +13,22 @@
         </ul>
     @endif
 
-    <form method="post" action="{{ route('admin.users.update', $user['id']) }}">
+    <form method="post" action="{{ route('admin.users.update', $user->id) }}">
         @csrf
         @method('PUT')
         <p>
             <label>{{ __('admin.user_first_name') }} *<br>
-                <input type="text" name="first_name" value="{{ old('first_name', $user['first_name']) }}" required style="width:280px">
+                <input type="text" name="first_name" value="{{ old('first_name', $user->first_name) }}" required style="width:280px">
             </label>
         </p>
         <p>
             <label>{{ __('admin.user_last_name') }} *<br>
-                <input type="text" name="last_name" value="{{ old('last_name', $user['last_name']) }}" required style="width:280px">
+                <input type="text" name="last_name" value="{{ old('last_name', $user->last_name) }}" required style="width:280px">
             </label>
         </p>
         <p>
             <label>{{ __('conference.field_email') }} *<br>
-                <input type="email" name="email" value="{{ old('email', $user['email']) }}" required style="width:280px">
+                <input type="email" name="email" value="{{ old('email', $user->email) }}" required style="width:280px">
             </label>
         </p>
         <p><button type="submit">{{ __('admin.save') }}</button></p>

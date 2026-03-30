@@ -4,7 +4,7 @@
 
 @section('content')
     <h1>{{ __('conference.register_title') }}</h1>
-    <p>{{ $conference['title'] }}</p>
+    <p>{{ $conference->title }}</p>
 
     @if ($errors->any())
         <ul>
@@ -14,7 +14,7 @@
         </ul>
     @endif
 
-    <form method="post" action="{{ route('client.conferences.register.store', $conference['id']) }}">
+    <form method="post" action="{{ route('client.conferences.register.store', $conference->id) }}">
         @csrf
         <p>
             <label>{{ __('conference.field_name') }}<br>
@@ -31,5 +31,5 @@
         </p>
     </form>
 
-    <p><a href="{{ route('client.conferences.show', $conference['id']) }}">{{ __('conference.back_to_list') }}</a></p>
+    <p><a href="{{ route('client.conferences.show', $conference->id) }}">{{ __('conference.back_to_list') }}</a></p>
 @endsection

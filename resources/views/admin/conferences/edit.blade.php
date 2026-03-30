@@ -9,7 +9,7 @@
         <ul>@foreach ($errors->all() as $e)<li>{{ $e }}</li>@endforeach</ul>
     @endif
 
-    <form method="post" action="{{ route('admin.conferences.update', $conference['id']) }}">
+    <form method="post" action="{{ route('admin.conferences.update', $conference->id) }}">
         @csrf
         @method('PUT')
         @include('admin.conferences._form', ['conference' => $conference])

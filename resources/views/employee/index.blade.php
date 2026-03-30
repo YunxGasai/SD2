@@ -14,16 +14,16 @@
         </tr>
         @foreach ($conferences as $c)
             <tr>
-                <td>{{ $c['title'] }}</td>
-                <td>{{ $c['date'] }}</td>
+                <td>{{ $c->title }}</td>
+                <td>{{ $c->date->format('Y-m-d') }}</td>
                 <td>
-                    @if ($c['is_past'])
+                    @if ($c->is_past)
                         {{ __('conference.past_badge') }}
                     @else
                         {{ __('conference.planned_badge') }}
                     @endif
                 </td>
-                <td><a href="{{ route('employee.conferences.show', $c['id']) }}">{{ __('conference.view') }}</a></td>
+                <td><a href="{{ route('employee.conferences.show', $c->id) }}">{{ __('conference.view') }}</a></td>
             </tr>
         @endforeach
     </table>

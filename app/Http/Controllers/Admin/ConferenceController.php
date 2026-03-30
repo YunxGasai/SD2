@@ -5,13 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreConferenceRequest;
 use App\Http\Requests\UpdateConferenceRequest;
-use App\Support\FakeData;
+use App\Models\Conference;
 
 class ConferenceController extends Controller
 {
     public function index()
     {
-        return view('admin.conferences.index', ['conferences' => FakeData::conferences()]);
+        $conferences = Conference::query()->orderBy('date')->get();
+
+        return view('admin.conferences.index', ['conferences' => $conferences]);
     }
 
     public function create()
@@ -21,85 +23,52 @@ class ConferenceController extends Controller
 
     public function store(StoreConferenceRequest $request)
     {
-        $v = $request->validated();
-        $list = FakeData::raw();
-        $list[] = [
-            'id' => FakeData::nextId(),
-            'title' => $v['title'],
-            'description' => $v['description'],
-            'lecturers' => $v['lecturers'],
-            'date' => $v['date'],
-            'time' => $v['time'],
-            'address' => $v['address'],
-        ];
-        FakeData::saveRaw($list);
+        Conference::create($request->validated());
 
         return redirect()->route('admin.conferences.index')->with('status', __('admin.conference_created'));
     }
 
     public function show($id)
     {
-        $c = FakeData::conferenceById($id);
-        if ($c === null) {
+        $conference = Conference::find($id);
+        if ($conference === null) {
             abort(404);
         }
 
-        return view('admin.conferences.show', ['conference' => $c]);
+        return view('admin.conferences.show', ['conference' => $conference]);
     }
 
     public function edit($id)
     {
-        $c = FakeData::conferenceById($id);
-        if ($c === null) {
+        $conference = Conference::find($id);
+        if ($conference === null) {
             abort(404);
         }
 
-        return view('admin.conferences.edit', ['conference' => $c]);
+        return view('admin.conferences.edit', ['conference' => $conference]);
     }
 
     public function update(UpdateConferenceRequest $request, $id)
     {
-        if (FakeData::conferenceById($id) === null) {
+        $conference = Conference::find($id);
+        if ($conference === null) {
             abort(404);
         }
-        $v = $request->validated();
-        $list = [];
-        foreach (FakeData::raw() as $row) {
-            if ($row['id'] == $id) {
-                $list[] = [
-                    'id' => (int) $id,
-                    'title' => $v['title'],
-                    'description' => $v['description'],
-                    'lecturers' => $v['lecturers'],
-                    'date' => $v['date'],
-                    'time' => $v['time'],
-                    'address' => $v['address'],
-                ];
-            } else {
-                $list[] = $row;
-            }
-        }
-        FakeData::saveRaw($list);
+        $conference->update($request->validated());
 
         return redirect()->route('admin.conferences.index')->with('status', __('admin.conference_updated'));
     }
 
     public function destroy($id)
     {
-        $c = FakeData::conferenceById($id);
-        if ($c === null) {
+        $conference = Conference::find($id);
+        if ($conference === null) {
             abort(404);
         }
-        if ($c['is_past']) {
+        if ($conference->is_past) {
             return redirect()->route('admin.conferences.index')->with('error', __('admin.cannot_delete_past'));
         }
-        $list = [];
-        foreach (FakeData::raw() as $row) {
-            if ($row['id'] != $id) {
-                $list[] = $row;
-            }
-        }
-        FakeData::saveRaw($list);
+        $conference->delete();
 
         return redirect()->route('admin.conferences.index')->with('status', __('admin.conference_deleted'));
     }

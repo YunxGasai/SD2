@@ -27,16 +27,16 @@
         </tr>
         @foreach ($conferences as $c)
             <tr>
-                <td>{{ $c['title'] }}</td>
-                <td>{{ $c['date'] }}</td>
-                <td>@if ($c['is_past']) {{ __('conference.past_badge') }} @else {{ __('conference.planned_badge') }} @endif</td>
+                <td>{{ $c->title }}</td>
+                <td>{{ $c->date->format('Y-m-d') }}</td>
+                <td>@if ($c->is_past) {{ __('conference.past_badge') }} @else {{ __('conference.planned_badge') }} @endif</td>
                 <td>
-                    <a href="{{ route('admin.conferences.show', $c['id']) }}">{{ __('conference.view') }}</a>
-                    <a href="{{ route('admin.conferences.edit', $c['id']) }}">{{ __('admin.edit') }}</a>
-                    @if ($c['is_past'])
+                    <a href="{{ route('admin.conferences.show', $c->id) }}">{{ __('conference.view') }}</a>
+                    <a href="{{ route('admin.conferences.edit', $c->id) }}">{{ __('admin.edit') }}</a>
+                    @if ($c->is_past)
                         ({{ __('admin.delete') }})
                     @else
-                        <form action="{{ route('admin.conferences.destroy', $c['id']) }}" method="post" style="display:inline" onsubmit="return confirm('{{ __('admin.confirm_delete') }}');">
+                        <form action="{{ route('admin.conferences.destroy', $c->id) }}" method="post" style="display:inline" onsubmit="return confirm('{{ __('admin.confirm_delete') }}');">
                             @csrf
                             @method('DELETE')
                             <button type="submit">{{ __('admin.delete') }}</button>

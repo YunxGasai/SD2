@@ -22,7 +22,7 @@ return [
     'register_submit' => 'Siųsti',
     'field_name' => 'Vardas ir pavardė',
     'field_email' => 'El. paštas',
-    'register_ok' => 'Registracija išsaugota (mock).',
+    'register_ok' => 'Registracija išsaugota.',
     'attendees_title' => 'Užsiregistravę klientai',
     'no_attendees' => 'Nėra užsiregistravusių.',
     'name_col' => 'Vardas',
