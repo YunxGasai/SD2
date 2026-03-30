@@ -29,13 +29,6 @@
         </p>
 
         <p>
-            <label>
-                <input type="checkbox" name="remember" value="1" {{ old('remember') ? 'checked' : '' }}>
-                {{ __('auth.remember_me') }}
-            </label>
-        </p>
-
-        <p>
             <button type="submit" class="btn btn-primary">{{ __('auth.login_button') }}</button>
         </p>
     </form>

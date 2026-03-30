@@ -5,6 +5,7 @@ return [
     'main_heading' => 'Pagrindinis puslapis',
     'student_block_title' => 'Studento informacija',
     'subsystems_title' => 'Posistemės',
+    'subsystems_guest_hint' => 'Prisijunkite, kad matytumėte savo posistemės nuorodą.',
     'link_client' => 'Kliento posistemė',
     'link_employee' => 'Darbuotojo posistemė',
     'link_admin' => 'Sistemos administratorius',

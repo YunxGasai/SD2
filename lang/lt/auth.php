@@ -8,7 +8,6 @@ return [
     'email' => 'El. paštas',
     'password' => 'Slaptažodis',
     'password_confirm' => 'Pakartokite slaptažodį',
-    'remember_me' => 'Prisiminti mane šiame kompiuteryje',
     'register_button' => 'Registruotis',
     'login_button' => 'Prisijungti',
     'back_home' => 'Atgal į pagrindinį',

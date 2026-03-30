@@ -19,9 +19,7 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
-        $remember = $request->boolean('remember');
-
-        if (Auth::attempt(['email' => $data['email'], 'password' => $data['password']], $remember)) {
+        if (Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
             $request->session()->regenerate();
 
             return redirect()->intended(route('home'))->with('status', __('auth.login_ok'));

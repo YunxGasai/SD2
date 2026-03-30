@@ -10,6 +10,19 @@
     <nav class="navbar navbar-expand navbar-white border-bottom bg-white mb-3">
         <div class="container">
             <a class="navbar-brand" href="{{ route('home') }}">{{ __('messages.app_title') }}</a>
+            @auth
+                <div class="navbar-nav flex-row gap-2 me-auto ms-3">
+                    @if (auth()->user()->hasRole('client'))
+                        <a class="nav-link py-0" href="{{ route('client.index') }}">{{ __('messages.link_client') }}</a>
+                    @endif
+                    @if (auth()->user()->hasRole('employee'))
+                        <a class="nav-link py-0" href="{{ route('employee.index') }}">{{ __('messages.link_employee') }}</a>
+                    @endif
+                    @if (auth()->user()->hasRole('admin'))
+                        <a class="nav-link py-0" href="{{ route('admin.dashboard') }}">{{ __('messages.link_admin') }}</a>
+                    @endif
+                </div>
+            @endauth
             <div class="navbar-nav ms-auto flex-row align-items-center gap-2">
                 @auth
                     <span class="navbar-text small">{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</span>

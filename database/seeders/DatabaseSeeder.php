@@ -18,29 +18,27 @@ class DatabaseSeeder extends Seeder
         $roleEmployee = Role::where('name', 'employee')->first();
         $roleAdmin = Role::where('name', 'admin')->first();
 
-        $pass = Hash::make('password');
-
         $u1 = User::create([
             'first_name' => 'Klientas',
             'last_name' => 'Pavyzdys',
-            'email' => 'client@example.com',
-            'password' => $pass,
+            'email' => 'client@client',
+            'password' => Hash::make('client'),
         ]);
         $u1->roles()->attach($roleClient->id);
 
         $u2 = User::create([
             'first_name' => 'Darbuotojas',
             'last_name' => 'Pavyzdys',
-            'email' => 'employee@example.com',
-            'password' => $pass,
+            'email' => 'employee@employee',
+            'password' => Hash::make('employee'),
         ]);
         $u2->roles()->attach($roleEmployee->id);
 
         $u3 = User::create([
             'first_name' => 'Adminas',
             'last_name' => 'Pavyzdys',
-            'email' => 'admin@example.com',
-            'password' => $pass,
+            'email' => 'admin@admin',
+            'password' => Hash::make('admin'),
         ]);
         $u3->roles()->attach($roleAdmin->id);
 
