@@ -15,4 +15,6 @@ return [
     'client_subsystem' => 'Klientas',
     'employee_subsystem' => 'Darbuotojas',
     'admin_subsystem' => 'Administratorius',
+
+    'bootstrap_hint' => 'Čia naudojamas Bootstrap (npm) — galima uždaryti šį pranešimą.',
 ];

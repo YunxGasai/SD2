@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// laikina – vėliau pakeisiu į tikrus kontrolerius
 Route::get('/client', function () {
     return view('placeholder', ['pageTitle' => __('messages.client_subsystem')]);
 })->name('client.index');

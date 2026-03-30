@@ -6,21 +6,19 @@
     <title>@yield('title', __('messages.app_title'))</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="sd-body">
-    <div class="sd-top">
-        <div class="sd-top-inner">
-            <div class="sd-logo">
-                <a href="{{ route('home') }}">{{ __('messages.app_title') }}</a>
-            </div>
-            <div class="sd-user">
-                {{ __('student.first_name') }} {{ __('student.last_name') }}
-                <button type="button" disabled>{{ __('messages.nav_logout') }}</button>
+<body>
+    <nav class="navbar navbar-expand navbar-light bg-white border-bottom mb-3">
+        <div class="container">
+            <a class="navbar-brand" href="{{ route('home') }}">{{ __('messages.app_title') }}</a>
+            <div class="navbar-nav ms-auto flex-row align-items-center gap-2">
+                <span class="navbar-text small">{{ __('student.first_name') }} {{ __('student.last_name') }}</span>
+                <button type="button" class="btn btn-sm btn-outline-secondary" disabled>{{ __('messages.nav_logout') }}</button>
             </div>
         </div>
-    </div>
+    </nav>
 
-    <div class="sd-main">
+    <main class="container pb-4">
         @yield('content')
-    </div>
+    </main>
 </body>
 </html>
