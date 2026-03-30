@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRegistrationRequest;
 use App\Models\Conference;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ClientController extends Controller
@@ -47,13 +48,24 @@ class ClientController extends Controller
             abort(404);
         }
 
-        $v = $request->validated();
+        $user = Auth::user();
+
+        $already = DB::table('users_conferences')
+            ->where('conference_id', $conference->id)
+            ->where('user_id', $user->id)
+            ->exists();
+
+        if ($already) {
+            return redirect()
+                ->route('client.conferences.show', $id)
+                ->with('error', __('conference.already_registered'));
+        }
 
         DB::table('users_conferences')->insert([
             'conference_id' => $conference->id,
-            'user_id' => null,
-            'registrant_name' => $v['name'],
-            'registrant_email' => $v['email'],
+            'user_id' => $user->id,
+            'registrant_name' => null,
+            'registrant_email' => null,
             'created_at' => now(),
             'updated_at' => now(),
         ]);

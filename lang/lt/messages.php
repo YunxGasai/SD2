@@ -18,4 +18,5 @@ return [
     'admin_subsystem' => 'Administratorius',
 
     'bootstrap_hint' => 'Čia naudojamas Bootstrap (npm) — galima uždaryti šį pranešimą.',
+    'home_intro' => 'Prisijunkite ir pasirinkite savo posistemę. Posistemės nuorodos rodomos tik turintiems atitinkamą vaidmenį.',
 ];

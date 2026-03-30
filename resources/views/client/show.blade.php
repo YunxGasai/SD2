@@ -4,7 +4,10 @@
 
 @section('content')
     @if (session('status'))
-        <p class="text-success">{{ session('status') }}</p>
+        <p class="alert alert-success py-2">{{ session('status') }}</p>
+    @endif
+    @if (session('error'))
+        <p class="alert alert-danger py-2">{{ session('error') }}</p>
     @endif
 
     <h1>{{ $conference->title }}</h1>

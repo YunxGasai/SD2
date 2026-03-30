@@ -9,10 +9,7 @@
         <p class="alert alert-success">{{ session('status') }}</p>
     @endif
 
-    <div class="alert alert-info alert-dismissible fade show" role="alert">
-        {{ __('messages.bootstrap_hint') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+    <p class="text-muted mb-4">{{ __('messages.home_intro') }}</p>
 
     <h2>{{ __('messages.student_block_title') }}</h2>
     <ul>

@@ -4,32 +4,22 @@
 
 @section('content')
     <h1>{{ __('conference.register_title') }}</h1>
-    <p>{{ $conference->title }}</p>
+    <p class="lead">{{ $conference->title }}</p>
 
-    @if ($errors->any())
-        <ul>
-            @foreach ($errors->all() as $e)
-                <li>{{ $e }}</li>
-            @endforeach
-        </ul>
+    <p>{{ __('conference.register_intro') }}</p>
+    <ul class="bg-white border rounded p-3" style="max-width: 420px">
+        <li><strong>{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</strong></li>
+        <li>{{ auth()->user()->email }}</li>
+    </ul>
+
+    @if (session('error'))
+        <p class="text-danger">{{ session('error') }}</p>
     @endif
 
-    <form method="post" action="{{ route('client.conferences.register.store', $conference->id) }}">
+    <form method="post" action="{{ route('client.conferences.register.store', $conference->id) }}" class="mt-3">
         @csrf
-        <p>
-            <label>{{ __('conference.field_name') }}<br>
-                <input type="text" name="name" value="{{ old('name') }}" required>
-            </label>
-        </p>
-        <p>
-            <label>{{ __('conference.field_email') }}<br>
-                <input type="email" name="email" value="{{ old('email') }}" required>
-            </label>
-        </p>
-        <p>
-            <button type="submit">{{ __('conference.register_submit') }}</button>
-        </p>
+        <button type="submit" class="btn btn-primary">{{ __('conference.register_submit') }}</button>
     </form>
 
-    <p><a href="{{ route('client.conferences.show', $conference->id) }}">{{ __('conference.back_to_list') }}</a></p>
+    <p class="mt-3"><a href="{{ route('client.conferences.show', $conference->id) }}">{{ __('conference.back_to_list') }}</a></p>
 @endsection
