@@ -4,7 +4,12 @@ return [
     'dashboard_title' => 'Administratoriaus posistemė',
     'link_users' => 'Naudotojų valdymas',
     'link_conferences' => 'Konferencijų valdymas',
-    'users_placeholder' => 'Naudotojų valdymas bus čia (vėlesnis etapas).',
+
+    'users_title' => 'Sistemos naudotojai',
+    'user_edit' => 'Naudotojo redagavimas',
+    'user_first_name' => 'Vardas',
+    'user_last_name' => 'Pavardė',
+    'user_updated' => 'Naudotojas atnaujintas.',
 
     'conferences_title' => 'Konferencijos (admin)',
     'conference_new' => 'Nauja konferencija',

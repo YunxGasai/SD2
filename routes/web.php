@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ConferenceController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\HomeController;
@@ -24,8 +25,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/', function () {
         return view('admin.dashboard');
     })->name('dashboard');
-    Route::get('/users', function () {
-        return view('admin.users_placeholder');
-    })->name('users.index');
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
     Route::resource('conferences', ConferenceController::class)->parameters(['conferences' => 'id']);
 });

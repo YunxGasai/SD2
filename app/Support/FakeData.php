@@ -15,6 +15,15 @@ class FakeData
         ];
     }
 
+    private static function startUsers(): array
+    {
+        return [
+            ['id' => 1, 'first_name' => 'Vardenis', 'last_name' => 'Pavardenis', 'email' => 'vardenis@pastas.lt'],
+            ['id' => 2, 'first_name' => 'Vardenė', 'last_name' => 'Pavardenė', 'email' => 'vardene@pastas.lt'],
+            ['id' => 3, 'first_name' => 'Trečias', 'last_name' => 'Naudotojas', 'email' => 'trecias@pastas.lt'],
+        ];
+    }
+
     public static function raw(): array
     {
         if (! session()->has('sd1_conferences')) {
@@ -112,5 +121,30 @@ class FakeData
         }
         $extra[] = ['conference_id' => $conferenceId, 'name' => $name, 'email' => $email];
         session(['sd1_reg' => $extra]);
+    }
+
+    public static function users(): array
+    {
+        if (! session()->has('sd1_users')) {
+            session(['sd1_users' => self::startUsers()]);
+        }
+
+        return session('sd1_users');
+    }
+
+    public static function saveUsers(array $list): void
+    {
+        session(['sd1_users' => $list]);
+    }
+
+    public static function userById($id): ?array
+    {
+        foreach (self::users() as $u) {
+            if ($u['id'] == $id) {
+                return $u;
+            }
+        }
+
+        return null;
     }
 }
