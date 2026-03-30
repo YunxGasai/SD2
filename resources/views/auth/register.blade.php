@@ -51,5 +51,9 @@
         </p>
     </form>
 
-    <p class="mt-3"><a href="{{ route('home') }}">{{ __('auth.back_home') }}</a></p>
+    <p class="mt-3">
+        <a href="{{ route('login') }}">{{ __('auth.nav_login') }}</a>
+        —
+        <a href="{{ route('home') }}">{{ __('auth.back_home') }}</a>
+    </p>
 @endsection

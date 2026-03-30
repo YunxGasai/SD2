@@ -13,10 +13,13 @@
             <div class="navbar-nav ms-auto flex-row align-items-center gap-2">
                 @auth
                     <span class="navbar-text small">{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</span>
-                    <button type="button" class="btn btn-sm btn-outline-secondary" disabled>{{ __('messages.nav_logout') }}</button>
+                    <form action="{{ route('logout') }}" method="post" class="d-inline">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-secondary">{{ __('messages.nav_logout') }}</button>
+                    </form>
                 @else
+                    <a class="nav-link py-0" href="{{ route('login') }}">{{ __('auth.nav_login') }}</a>
                     <a class="nav-link py-0" href="{{ route('register') }}">{{ __('auth.nav_register') }}</a>
-                    <span class="navbar-text small text-muted">{{ __('student.first_name') }} {{ __('student.last_name') }}</span>
                 @endauth
             </div>
         </div>
