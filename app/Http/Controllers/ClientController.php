@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreRegistrationRequest;
 use App\Support\FakeData;
-use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
@@ -34,17 +34,14 @@ class ClientController extends Controller
         return view('client.register', ['conference' => $c]);
     }
 
-    public function registerStore(Request $request, $id)
+    public function registerStore(StoreRegistrationRequest $request, $id)
     {
         $c = FakeData::conferenceById($id);
         if ($c === null || $c['is_past']) {
             abort(404);
         }
 
-        $v = $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255',
-        ]);
+        $v = $request->validated();
 
         FakeData::saveRegistration($id, $v['name'], $v['email']);
 
