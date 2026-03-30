@@ -11,8 +11,13 @@
         <div class="container">
             <a class="navbar-brand" href="{{ route('home') }}">{{ __('messages.app_title') }}</a>
             <div class="navbar-nav ms-auto flex-row align-items-center gap-2">
-                <span class="navbar-text small">{{ __('student.first_name') }} {{ __('student.last_name') }}</span>
-                <button type="button" class="btn btn-sm btn-outline-secondary" disabled>{{ __('messages.nav_logout') }}</button>
+                @auth
+                    <span class="navbar-text small">{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</span>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" disabled>{{ __('messages.nav_logout') }}</button>
+                @else
+                    <a class="nav-link py-0" href="{{ route('register') }}">{{ __('auth.nav_register') }}</a>
+                    <span class="navbar-text small text-muted">{{ __('student.first_name') }} {{ __('student.last_name') }}</span>
+                @endauth
             </div>
         </div>
     </nav>

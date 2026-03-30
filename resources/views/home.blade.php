@@ -5,6 +5,10 @@
 @section('content')
     <h1>{{ __('messages.main_heading') }}</h1>
 
+    @if (session('status'))
+        <p class="alert alert-success">{{ session('status') }}</p>
+    @endif
+
     <div class="alert alert-info alert-dismissible fade show" role="alert">
         {{ __('messages.bootstrap_hint') }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
